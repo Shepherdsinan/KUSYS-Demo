@@ -4,6 +4,7 @@ using EntityLayer.Concrete;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -14,24 +15,30 @@ public class StudentController : Controller
     private readonly ICourseService _courseService;
     private readonly IStudentCourseService _studentCourseService;
     private readonly IValidator<Student> _studentValidator;
+    private readonly SignInManager<AppUser> _signInManager;
+    private readonly UserManager<AppUser> _userManager;
 
-    public StudentController(IStudentService studentService, ICourseService courseService, IValidator<Student> studentValidator, IStudentCourseService studentCourseService)
+    public StudentController(IStudentService studentService, ICourseService courseService, IValidator<Student> studentValidator, IStudentCourseService studentCourseService, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
     {
         _studentService = studentService;
         _courseService = courseService;
         _studentValidator = studentValidator;
         _studentCourseService = studentCourseService;
+        _signInManager = signInManager;
+        _userManager = userManager;
     }
 
     #region Index metodu öğrencileri listeler
     public IActionResult Index()
     {
-        var values = _studentService.GetStudentsByCourseId();
+        var userId = _signInManager.UserManager.GetUserId(User);
+        int StudentId = (_userManager.FindByIdAsync(userId).Result).StudentId;
+        var values = _studentService.GetListById(StudentId);
         return View(values);
     }
     #endregion
     
-    #region Us1
+    #region Us1 (create,update,delete)
     /*Us1 Codes start*/
     #region AddStudent get ile sayfa yüklenir. 
     [Authorize(Roles = "Admin")]
@@ -117,7 +124,7 @@ public class StudentController : Controller
 
     #region Us2
     /*Us2 Codes start*/
-    #region StudentDetails metodu ile öğrenci ve kursların eşleşmesi getirilir 
+    #region StudentDetails metodu ile öğrenci ve kurs detayları listelenir
     [Authorize(Roles = "Admin,User")]
     [HttpPost]
     public IActionResult StudentDetails(int id)

@@ -55,14 +55,14 @@ namespace DataAccessLayer.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "4ffb5e44-1baa-4343-9ce3-ad7fdece0e77",
+                            ConcurrencyStamp = "361d2e2d-5bbc-459d-84d0-5b01c8e5e150",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "0cebcc01-44e6-45e0-ab1e-f587e0d76624",
+                            ConcurrencyStamp = "011c6390-b9bc-40cc-9ec5-97a1cae94aac",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -116,7 +116,7 @@ namespace DataAccessLayer.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StudentId")
+                    b.Property<int>("StudentId")
                         .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -143,15 +143,16 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "59505d8f-f14e-4883-ad29-2f34d78ac301",
+                            ConcurrencyStamp = "7e3d20bf-b44a-4003-92e6-5d2a3c9cd5de",
                             Email = "admin@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAECn2LWb/LADXXje65j0sP7thIgw3VSLguzui6CXnIQjlT5xg7YKp5aFiOhPADup//Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIBf0LklPKbkQQqqZs1YkwUw+0XYgXP9N+/ZZfpXijM8uekr3CimS+v5lbuqnA9/Qg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f964142e-3d8e-464f-916a-2743fb412548",
+                            SecurityStamp = "940436be-2684-44df-bf8a-cb3ab70450a7",
+                            StudentId = 0,
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
