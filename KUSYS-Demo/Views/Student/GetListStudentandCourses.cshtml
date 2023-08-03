@@ -16,8 +16,6 @@
                 <th scope="col" class="sort" data-sort="budget">Last Name</th>
                 <th scope="col" class="sort" data-sort="budget">Date of Birth</th>
                 <th scope="col" class="sort" data-sort="budget">Selected Course Code</th>
-                <th scope="col" class="sort" data-sort="budget">Name of Selected Course</th>
-
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -39,7 +37,7 @@
                         @item.BirthDate
                     </td>
                     <td class="budget">
-                        @string.Join(", ", item.StudentCourse.Select(c => c.CourseId).ToArray());
+                        @string.Join(", ", item.StudentCourse.Select(c => c.CourseId).ToArray())
                     </td>
                 </tr>
             }
