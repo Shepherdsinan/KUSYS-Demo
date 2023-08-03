@@ -1,0 +1,114 @@
+@model List<Student>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card-header border-0">
+    <h3 class="mb-0">Students</h3>
+</div>
+<!-- Light table -->
+<div class="table-responsive">
+    <table class="table align-items-center table-flush" id="CustomerGrid">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col" class="sort" data-sort="name">Student Id</th>
+                <th scope="col" class="sort" data-sort="budget">First Name</th>
+                <th scope="col" class="sort" data-sort="budget">Last Name</th>
+                <th scope="col" class="sort" data-sort="completion">Details</th>
+                <th scope="col" class="sort" data-sort="completion">Assign a Course</th>
+                @if (User != null && User.IsInRole("Admin"))
+                {
+                    <th scope="col" class="sort" data-sort="completion">Delete</th>
+                    <th scope="col" class="sort" data-sort="completion">Edit</th>
+                }
+                
+            </tr>
+        </thead>
+        <tbody class="list">
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th>
+                        @item.StudentId
+                    </th>
+                    <td class="budget">
+                        @item.FirstName
+                    </td>
+                    <td class="budget">
+                        @item.LastName
+                    </td>
+                    
+                    <td><input type="button" class="btn btn-outline-primary" value="Show Detail" onclick="takestudent(@item.StudentId)" /></td>
+                    <td><a href="/Student/CourseAssignStudent/@item.StudentId" class="btn btn-outline-info">Assign a Course</a></td>
+                    @if (User != null && User.IsInRole("Admin"))
+                    {
+                        <td><a href="/Student/DeleteStudent/@item.StudentId" class="btn btn-outline-danger">Delete</a></td>
+                        <td><a href="/Student/UpdateStudent/@item.StudentId" class="btn btn-outline-success">Update</a></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (User != null && User.IsInRole("Admin"))
+    {
+        <a href="/Student/AddStudent/" class="btn btn-primary">Add New Student</a>
+    }
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Student Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label class="font-weight-bold">Student Id:</label><span class="s_studentid"></span><br />
+                <label class="font-weight-bold">First Name:</label><span class="s_firtname"></span><br />
+                <label class="font-weight-bold">Last Name:</label><span class="s_lastname"></span><br />
+                <label class="font-weight-bold">Birthday:</label><span class="s_birthday"></span><br />
+                <label class="font-weight-bold">Course Code:</label><span class="s_courseid"></span><br />
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    console.log("test");
+    function takestudent(id) {
+        debugger;
+        
+            $.ajax({
+                url: '@Url.Action("StudentDetails","Student")',
+                type: 'POST',
+                dataType: 'json',
+                data: { id: id },
+                success: function (datarequest) {
+                    debugger;
+                    console.log(datarequest);
+                    debugger;
+                    console.log(datarequest.studentId);
+                    $('#myModal').modal('toggle');
+                    $('.s_studentid').html(datarequest.studentId);
+                    $('.s_firtname').html(datarequest.firstName);
+                    $('.s_lastname').html(datarequest.lastName);
+                    $('.s_birthday').html(datarequest.birthDate);
+                    $('.s_courseid').html(datarequest.courseIds);
+
+                },
+                error: function (hata) {
+                    alert("Bir hata oluştu...")
+                }
+            });
+
+    }
+    
+</script>

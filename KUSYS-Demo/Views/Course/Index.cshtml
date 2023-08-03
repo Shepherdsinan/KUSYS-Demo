@@ -1,0 +1,34 @@
+@model List<Course>
+@{
+    ViewData["Title"] = "Course List";
+}
+
+<div class="card-header border-0">
+    <h3 class="mb-0">Kurslar Tablosu</h3>
+</div>
+<!-- Light table -->
+<div class="table-responsive">
+        <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col" class="sort" data-sort="budget">Kurs Kodu</th>
+                    <th scope="col" class="sort" data-sort="budget">Kurs Adı</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody class="list">
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th>
+                            @item.CourseId
+                        </th>
+                        <td class="budget">
+                            @item.CourseName
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>

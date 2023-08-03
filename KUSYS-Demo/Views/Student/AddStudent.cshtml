@@ -1,0 +1,32 @@
+@model Student
+@{
+    ViewData["Title"] = "AddStudent";
+}
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <p class="card-description"> Adding Students</p>
+            <form class="forms-sample" method="post">
+                <div class="form-group">
+                    <label>First Name</label>
+                    @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
+                      @Html.ValidationMessageFor(x => x.FirstName)
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.LastName)
+                </div>
+                 <div class="form-group">
+                    <label>Date of birth</label>                  
+                    <input class="form-control" asp-for="BirthDate" asp-format="{0:yyyy-MM-dd}"/>
+                     @Html.ValidationMessageFor(x => x.BirthDate)
+                </div>
+
+                <button type="submit" class="btn btn-primary mr-2">Save</button>
+               
+            </form>
+        </div>
+    </div>
+</div>

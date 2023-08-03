@@ -1,0 +1,49 @@
+@model List<Student>
+@{
+    ViewData["Title"] = "GetListStudentandCourses";    
+}
+
+<div class="card-header border-0">
+    <h3 class="mb-0">Student List All and Course Matching</h3>
+</div>
+<!-- Light table -->
+<div class="table-responsive">
+    <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col" class="sort" data-sort="name">Student Id</th>
+                <th scope="col" class="sort" data-sort="budget">First Name</th>
+                <th scope="col" class="sort" data-sort="budget">Last Name</th>
+                <th scope="col" class="sort" data-sort="budget">Date of Birth</th>
+                <th scope="col" class="sort" data-sort="budget">Selected Course Code</th>
+                <th scope="col" class="sort" data-sort="budget">Name of Selected Course</th>
+
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody class="list">
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th>
+                        @item.StudentId
+                    </th>
+                    <td class="budget">
+                        @item.FirstName
+                    </td>
+                    <td class="budget">
+                        @item.LastName
+                    </td>
+                    <td class="budget">
+                        @item.BirthDate
+                    </td>
+                    <td class="budget">
+                        @string.Join(", ", item.StudentCourse.Select(c => c.CourseId).ToArray());
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
