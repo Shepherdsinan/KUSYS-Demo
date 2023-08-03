@@ -25,6 +25,11 @@ namespace DataAccessLayer.EntityFramework
             return _context.Students.Include(x => x.StudentCourse).ToList();
         }
         
+        public List<Student> GetListById(int id)
+        {
+            return _context.Students.Where(s => s.StudentId == id).ToList();
+        }
+        
         public Student GetWithCourses(int id)
         {
             return _context.Students.Include(x => x.StudentCourse).FirstOrDefault(s => s.StudentId == id);

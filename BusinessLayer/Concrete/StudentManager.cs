@@ -16,7 +16,12 @@ public class StudentManager : IStudentService
     {
         return _studentDal.GetListCourses();
     }
-    
+
+    public List<Student> GetListById(int Id)
+    {
+        return _studentDal.GetListById(Id);
+    }
+
     public Student GetStudentWithCourses(int id)
     {
         return _studentDal.GetWithCourses(id);

@@ -10,6 +10,7 @@ namespace DataAccessLayer.Abstract
     public interface IStudentDal : IGenericDal<Student>
     {
         public List<Student> GetListCourses();
+        public List<Student> GetListById(int Id);
         public Student GetWithCourses(int id);
     }
 }
