@@ -12,7 +12,7 @@ public class CourseController : Controller
         _courseService = courseService;
     }
     #region Index metodu ile tüm kurslar listelenir
-    [Authorize (Roles = "Admin")]
+    [AllowAnonymous]
     public IActionResult Index(){
         var value = _courseService.TGetList();
         return View(value);
