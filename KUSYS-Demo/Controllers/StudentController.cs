@@ -199,7 +199,7 @@ public class StudentController : Controller
     #region Us4 List all students and courses matchings
     /*Us3 Codes start*/
     #region GetListStudentandCourses öğrenci ve kursların eşleşerek getirilir
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin")]
     public IActionResult GetListStudentandCourses()
     {
         var values = _studentService.GetStudentsByCourseId();
