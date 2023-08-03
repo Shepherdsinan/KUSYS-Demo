@@ -15,7 +15,8 @@ builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Entity
 
 builder.Services.AddControllersWithViews();
 builder.Services.ContainerDependencies();
-builder.Services.AddControllersWithViews().AddNToastNotifyNoty(new NotyOptions(){ProgressBar = true,Timeout = 5000,Theme = "mint"});
+builder.Services.AddControllersWithViews()
+    .AddNToastNotifyNoty(new NotyOptions() { ProgressBar = true, Timeout = 5000, Theme = "mint" });
 builder.Services.AddMvc(config =>
 {
     var policy = new AuthorizationPolicyBuilder()
