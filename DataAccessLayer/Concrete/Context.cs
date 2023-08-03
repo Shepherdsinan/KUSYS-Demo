@@ -60,9 +60,23 @@ namespace DataAccessLayer.Concrete
             admin.NormalizedEmail = admin.Email.ToUpperInvariant();
             admin.PasswordHash = hasher.HashPassword(admin, "admin");
             admin.StudentId = 0;
+            
+            var user = new AppUser()
+            {
+                Id = 2,
+                Email = "user@example.com",
+                UserName = "202301001",
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
+
+            user.NormalizedUserName = user.UserName.ToUpperInvariant();
+            user.NormalizedEmail = user.Email.ToUpperInvariant();
+            user.PasswordHash = hasher.HashPassword(user, "202301001");
+            user.StudentId = 202301001;
+            
 
             modelBuilder.Entity<AppUser>().HasData(
-                admin
+                admin,user
             );
 
             modelBuilder.Entity<IdentityUserRole<int>>().HasData(
@@ -70,6 +84,11 @@ namespace DataAccessLayer.Concrete
                 {
                     UserId = 1,
                     RoleId = 1
+                },
+                new IdentityUserRole<int>()
+                {
+                    UserId = 2,
+                    RoleId = 2
                 }
             );
 
@@ -79,14 +98,14 @@ namespace DataAccessLayer.Concrete
             modelBuilder.Entity<Student>().HasData(
                 new Student()
                 {
-                    StudentId = 1,
+                    StudentId = 202301001,
                     FirstName = "Hüsnü",
                     LastName = "Çoban",
                     BirthDate = new DateTime(2022, 06, 16),
                 },
                 new Student()
                 {
-                    StudentId = 2,
+                    StudentId = 202301002,
                     FirstName = "Rıza",
                     LastName = "Çoban",
                     BirthDate = new DateTime(2000, 05, 15), //Convert.ToDateTime("2000-05-15"),
@@ -95,10 +114,10 @@ namespace DataAccessLayer.Concrete
 
             modelBuilder.Entity<StudentCourse>().HasKey(sc => new { sc.StudentId, sc.CourseId });
             modelBuilder.Entity<StudentCourse>().HasData(
-                new { StudentId = 1, CourseId = "CSI101" },
-                new { StudentId = 1, CourseId = "MAT101" },
-                new { StudentId = 2, CourseId = "CSI102" },
-                new { StudentId = 2, CourseId = "PHY101" }
+                new { StudentId = 202301001, CourseId = "CSI101" },
+                new { StudentId = 202301001, CourseId = "MAT101" },
+                new { StudentId = 202301002, CourseId = "CSI102" },
+                new { StudentId = 202301002, CourseId = "PHY101" }
             );
         }
 

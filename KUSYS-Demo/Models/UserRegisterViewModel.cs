@@ -9,11 +9,10 @@ public class UserRegisterViewModel
     //
     // [Required(ErrorMessage = "Lütfen soyadınızı giriniz")]
     // public string? Surname { get; set; }
+    [Required(ErrorMessage = "Lütfen öğrenci numaranızı giriniz")]
     public int StudentId { get; set; }
-    [Required(ErrorMessage = "Lütfen kullanıcı adını giriniz")]
-    public string? Username { get; set; }
 
-    [Required(ErrorMessage = "Lütfen Mail adresini giriniz")]
+    [Required(ErrorMessage = "Lütfen Mail adresinizi giriniz")]
     public string? Mail { get; set; }
 
     [Required(ErrorMessage = "Lütfen şifreyi giriniz")]

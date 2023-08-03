@@ -1,3 +1,5 @@
+using BusinessLayer.Abstract;
+using BusinessLayer.Concrete;
 using EntityLayer.Concrete;
 using KUSYS_Demo.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -10,11 +12,13 @@ public class LoginController : Controller
 {
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
+    private readonly IStudentService _studentService;
 
-    public LoginController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+    public LoginController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IStudentService studentManager)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _studentService = studentManager;
     }
 
     [HttpGet]
@@ -25,11 +29,23 @@ public class LoginController : Controller
     [HttpPost]
     public async Task<IActionResult> SignUp(UserRegisterViewModel p)
     {
-
+        // validate UserRegisterViewModel
+        if (!ModelState.IsValid)
+        {
+            return View(p);
+        }
+        
+        
+        var student = _studentService.TGetById(p.StudentId);
+        if (student == null)
+        {
+            ModelState.AddModelError("StudentId", "Öğrenci bulunamadı.");
+            return View(p);
+        }
         AppUser appUser = new AppUser()
         {
             Email = p.Mail,
-            UserName = p.Username,
+            UserName = p.StudentId.ToString(),
             StudentId = p.StudentId
         };
         if (p.Password == p.ConfirmPassword)
@@ -64,11 +80,11 @@ public class LoginController : Controller
             var result = await _signInManager.PasswordSignInAsync(p.username, p.password, false, true);
             if (result.Succeeded)
             {
-                return RedirectToAction("GetListStudentandCourses", "Student");
+                return RedirectToAction("Index", "Course");
             }
             else
             {
-                return RedirectToAction("SignIn", "Login");
+                ModelState.AddModelError(string.Empty, "Kullanıcı adı veya şifre hatalı.");
             }
         }
         return View();
