@@ -1,6 +1,7 @@
 @model List<Student>
 @{
     ViewData["Title"] = "Index";
+    int count = 0;
 }
 
 <div class="card-header border-0">
@@ -11,7 +12,7 @@
     <table class="table align-items-center table-flush" id="CustomerGrid">
         <thead class="thead-light">
             <tr>
-                <th scope="col" class="sort" data-sort="name">Student Id</th>
+                <th scope="col" class="sort" data-sort="name">#</th>
                 <th scope="col" class="sort" data-sort="budget">First Name</th>
                 <th scope="col" class="sort" data-sort="budget">Last Name</th>
                 <th scope="col" class="sort" data-sort="completion">Details</th>
@@ -28,9 +29,10 @@
 
             @foreach (var item in Model)
             {
+                count++;
                 <tr>
                     <th>
-                        @item.StudentId
+                        @count
                     </th>
                     <td class="budget">
                         @item.FirstName
@@ -66,7 +68,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <label class="font-weight-bold">Student Id:</label><span class="s_studentid"></span><br />
+                <label class="font-weight-bold">#</label><span class="s_studentid"></span><br />
                 <label class="font-weight-bold">First Name:</label><span class="s_firtname"></span><br />
                 <label class="font-weight-bold">Last Name:</label><span class="s_lastname"></span><br />
                 <label class="font-weight-bold">Birthday:</label><span class="s_birthday"></span><br />
