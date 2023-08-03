@@ -33,7 +33,15 @@ public class StudentController : Controller
     {
         var userId = _signInManager.UserManager.GetUserId(User);
         int StudentId = (_userManager.FindByIdAsync(userId).Result).StudentId;
-        var values = _studentService.GetListById(StudentId);
+        List<Student> values;
+        if (StudentId ==0) //is admin
+        {
+            values = _studentService.TGetList();
+        }
+        else
+        {
+            values = _studentService.GetListById(StudentId);
+        }
         return View(values);
     }
     #endregion
