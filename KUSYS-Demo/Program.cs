@@ -23,8 +23,10 @@ builder.Services.AddMvc(config =>
         .Build();
     config.Filters.Add(new AuthorizeFilter(policy));
 });
-builder.Services.ConfigureApplicationCookie(options =>{
+builder.Services.ConfigureApplicationCookie(options =>
+{
     options.LoginPath = "/Login/SignIn";
+    options.AccessDeniedPath = "/Login/AccessDenied";
 });
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
