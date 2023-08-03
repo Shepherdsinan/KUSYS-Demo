@@ -53,7 +53,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Student}/{action=GetListStudentandCourses}/{id?}");
+    pattern: "{controller=Course}/{action=Index}/{id?}");
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<EntityContext>();
