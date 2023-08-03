@@ -4,6 +4,7 @@ using EntityLayer.Concrete;
 using KUSYS_Demo.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using NToastNotify;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddDbContext<EntityContext>();
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<EntityContext>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<EntityContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.ContainerDependencies();
+builder.Services.AddControllersWithViews().AddNToastNotifyNoty(new NotyOptions(){ProgressBar = true,Timeout = 5000,Theme = "mint"});
 builder.Services.AddMvc(config =>
 {
     var policy = new AuthorizationPolicyBuilder()
@@ -25,7 +27,7 @@ builder.Services.ConfigureApplicationCookie(options =>{
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
-
+app.UseNToastNotify();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

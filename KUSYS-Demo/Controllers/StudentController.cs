@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using NToastNotify;
 
 namespace KUSYS_Demo.Controllers;
 public class StudentController : Controller
@@ -17,8 +18,9 @@ public class StudentController : Controller
     private readonly IValidator<Student> _studentValidator;
     private readonly SignInManager<AppUser> _signInManager;
     private readonly UserManager<AppUser> _userManager;
+    private readonly IToastNotification _toastNotification;
 
-    public StudentController(IStudentService studentService, ICourseService courseService, IValidator<Student> studentValidator, IStudentCourseService studentCourseService, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
+    public StudentController(IStudentService studentService, ICourseService courseService, IValidator<Student> studentValidator, IStudentCourseService studentCourseService, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IToastNotification toastNotification)
     {
         _studentService = studentService;
         _courseService = courseService;
@@ -26,6 +28,7 @@ public class StudentController : Controller
         _studentCourseService = studentCourseService;
         _signInManager = signInManager;
         _userManager = userManager;
+        _toastNotification = toastNotification;
     }
 
     #region Index metodu öğrencileri listeler
@@ -46,7 +49,7 @@ public class StudentController : Controller
     }
     #endregion
     
-    #region Us1 (create,update,delete)
+    #region Us1 Create/Update/Delete a student
     /*Us1 Codes start*/
     #region AddStudent get ile sayfa yüklenir. 
     [Authorize(Roles = "Admin")]
@@ -66,6 +69,7 @@ public class StudentController : Controller
         if (results.IsValid)
         {
             _studentService.TAdd(student);
+            _toastNotification.AddSuccessToastMessage("Student Added Successfully");
             return RedirectToAction("Index");
         }
         else
@@ -103,6 +107,7 @@ public class StudentController : Controller
             oldStudent.LastName = student.LastName;
             oldStudent.BirthDate = student.BirthDate;
             _studentService.TUpdate(oldStudent);
+            _toastNotification.AddSuccessToastMessage("Student Updated Successfully");
             return RedirectToAction("Index");
         }
         else
@@ -126,11 +131,12 @@ public class StudentController : Controller
     {
         var values = _studentService.TGetById(id);
         _studentService.TDelete(values);
+        _toastNotification.AddInfoToastMessage("Student Deleted");
         return RedirectToAction("Index");
     }
     #endregion
 
-    #region Us2
+    #region Us2 List All Students and see details popup
     /*Us2 Codes start*/
     #region StudentDetails metodu ile öğrenci ve kurs detayları listelenir
     [Authorize(Roles = "Admin,User")]
@@ -145,7 +151,7 @@ public class StudentController : Controller
     /*Us2 Codes end*/
     #endregion
 
-    #region Us3
+    #region Us3 Match a student with a selection of courses
     /*Us3 Codes start*/
     #region CourseAssignStudent dropdownlist için kursları çeker
     [Authorize(Roles = "Admin,User")]
@@ -190,7 +196,7 @@ public class StudentController : Controller
     /*Us3 Codes end*/
     #endregion
     
-    #region Us4
+    #region Us4 List all students and courses matchings
     /*Us3 Codes start*/
     #region GetListStudentandCourses öğrenci ve kursların eşleşerek getirilir
     [AllowAnonymous]
