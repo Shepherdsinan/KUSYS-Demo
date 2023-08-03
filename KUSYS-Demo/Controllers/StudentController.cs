@@ -32,15 +32,15 @@ public class StudentController : Controller
     public IActionResult Index()
     {
         var userId = _signInManager.UserManager.GetUserId(User);
-        int StudentId = (_userManager.FindByIdAsync(userId).Result).StudentId;
+        int studentId = (_userManager.FindByIdAsync(userId).Result).StudentId;
         List<Student> values;
-        if (StudentId ==0) //is admin
+        if (studentId ==0) //is admin
         {
             values = _studentService.TGetList();
         }
         else
         {
-            values = _studentService.GetListById(StudentId);
+            values = _studentService.GetListById(studentId);
         }
         return View(values);
     }
