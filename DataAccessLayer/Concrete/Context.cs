@@ -58,6 +58,7 @@ namespace DataAccessLayer.Concrete
             admin.NormalizedUserName = admin.UserName.ToUpperInvariant();
             admin.NormalizedEmail = admin.Email.ToUpperInvariant();
             admin.PasswordHash = hasher.HashPassword(admin, "admin");
+            admin.StudentId = 0;
 
             modelBuilder.Entity<AppUser>().HasData(
                 admin
