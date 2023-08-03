@@ -1,7 +1,7 @@
 @model List<Student>
 @{
     ViewData["Title"] = "Index";
-    int count = 0;
+    
 }
 
 <div class="card-header border-0">
@@ -12,7 +12,7 @@
     <table class="table align-items-center table-flush" id="CustomerGrid">
         <thead class="thead-light">
             <tr>
-                <th scope="col" class="sort" data-sort="name">#</th>
+                <th scope="col" class="sort" data-sort="name">Student Id</th>
                 <th scope="col" class="sort" data-sort="budget">First Name</th>
                 <th scope="col" class="sort" data-sort="budget">Last Name</th>
                 <th scope="col" class="sort" data-sort="completion">Details</th>
@@ -29,10 +29,9 @@
 
             @foreach (var item in Model)
             {
-                count++;
                 <tr>
                     <th>
-                        @count
+                        @item.StudentId
                     </th>
                     <td class="budget">
                         @item.FirstName
