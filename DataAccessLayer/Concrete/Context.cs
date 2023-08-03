@@ -9,7 +9,8 @@ namespace DataAccessLayer.Concrete
     public class EntityContext : IdentityDbContext<AppUser, AppRole, int>
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
-            optionsBuilder.UseSqlServer("server=localhost;database=KUSYSDemo;User Id=sa;Password=1;");
+            optionsBuilder.UseSqlite("Data Source=KUSYSDemo.db");
+           // optionsBuilder.UseSqlServer("server=localhost;database=KUSYSDemo;User Id=sa;Password=1;");
         //optionsBuilder.UseInMemoryDatabase(databaseName: "KUSYSDemo"); //Test connstring
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

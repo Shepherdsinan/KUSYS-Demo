@@ -10,7 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<EntityContext>();
-builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<EntityContext>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<EntityContext>();
+builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<EntityContext>()
+    .AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<EntityContext>();
+
 builder.Services.AddControllersWithViews();
 builder.Services.ContainerDependencies();
 builder.Services.AddControllersWithViews().AddNToastNotifyNoty(new NotyOptions(){ProgressBar = true,Timeout = 5000,Theme = "mint"});
@@ -49,5 +51,10 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Student}/{action=GetListStudentandCourses}/{id?}");
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<EntityContext>();
+    dbContext.Database.EnsureCreated();
+}
 
 app.Run();
