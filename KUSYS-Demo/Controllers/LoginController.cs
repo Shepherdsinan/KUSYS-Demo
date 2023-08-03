@@ -79,4 +79,8 @@ public class LoginController : Controller
         await _signInManager.SignOutAsync();
         return RedirectToAction("SignIn", "Login");
     }
+    public IActionResult AccessDenied()
+    {
+        return View();
+    }
 }
